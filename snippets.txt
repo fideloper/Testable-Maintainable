@@ -1,0 +1,51 @@
+============================================================
+Second User Test Mocked
+============================================================
+
+<?php
+
+use Mockery as m;
+use Fideloper\Second\User;
+
+class SecondUserTest extends PHPUnit_Framework_TestCase {
+
+    public function testGetCurrentUserMock()
+    {
+        $db_connection = $this->_mockDb();
+
+        $user = new User( $db_connection );
+
+        $result = $user->getUser( 1 );
+
+        $expected = new StdClass();
+        $expected->id = 1;
+        $expected->username = 'fideloper';
+
+        $this->assertEquals( $result->id,        $expected->id,          'User ID set correctly' );
+        $this->assertEquals( $result->username,  $expected->username,    'Username set correctly' );
+    }
+
+    protected function _mockDb()
+    {
+        // "Mock" (stub) database row result object
+        $returnResult = new StdClass();
+        $returnResult->id = 1;
+        $returnResult->username = 'fideloper';
+
+        // Mock database result object
+        $result = m::mock('DbResult');
+        $result->shouldReceive('num_results')->once()->andReturn( 1 );
+        $result->shouldReceive('row')->once()->andReturn( $returnResult );
+
+        // Mock database connection object
+        $db = m::mock('DbConnection');
+
+        $db->shouldReceive('select')->once()->andReturn( $db );
+        $db->shouldReceive('where')->once()->andReturn( $db );
+        $db->shouldReceive('limit')->once()->andReturn( $db );
+        $db->shouldReceive('get')->once()->andReturn( $result );
+
+        return $db;
+    }
+
+}
