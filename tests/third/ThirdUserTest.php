@@ -3,7 +3,7 @@
 use Mockery as m;
 use Fideloper\Third\User;
 
-class SecondUserTest extends PHPUnit_Framework_TestCase {
+class ThirdUserTest extends PHPUnit_Framework_TestCase {
 
     public function testGetCurrentUserMock()
     {
