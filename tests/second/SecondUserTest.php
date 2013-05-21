@@ -12,7 +12,7 @@ class SecondUserTest extends PHPUnit_Framework_TestCase {
     {
         $db_connection = '??';
 
-        $user = new User( $db_connection );
+        $user = new User( $db_connection ); // Need to bootstrap my app still?!
 
         $result = $user->getUser( 1 );
 
